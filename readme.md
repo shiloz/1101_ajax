@@ -93,7 +93,7 @@ $(selector).load(url)
 ## axios函式庫
 axios是一個基於Promise標準而建立的非同步請求函式庫，除了提供簡便的語法操作外，由於axios只專注在非同步的請求上，因此整個函式庫相較jQuery小很多，也因此成為許多框架或是不想使用jQuery的使用者喜歡。
 
-CDN：`https://cdnjs.com/libraries/axios`
+CDN：`https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js`
 
 語法：
 ```javascript
