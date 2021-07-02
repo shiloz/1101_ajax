@@ -24,16 +24,40 @@
     * 4.建立得到回應時的各項行為
     * 5.送出請求
     ********************************************************/
-
+    var xhr=new XMLHttpRequest
     //宣告一個XMLHttpRequest物件
+    xhr.open('GET','https://kktix.com/events.json');
 
+//處理回應
+xhr.onload=function(){  
+    var type=xhr.getResponseHeader("Content-Type");
+    var status=xhr.status
+    var response=xhr.responseText
+    render(response)
+    //console.log(response)
+}
 
-    //建立請求的各項設定及實質內容
+//執行請求及傳送內容
+xhr.send();
 
+function render(res){
+    let r=JSON.parse(res)
+    console.log(r)
+    let title=r.title
+    let th=document.querySelector('.title');
+    th.innerHTML=title
+    console.log(title,th);
 
-    //建立得到回應時的各項設定及行為
+    let entry=r.entry;
+    let ul=document.querySelector('ul');
+    let list="";
+    entry.forEach(function(event,idx){
+        let el=`<li>${event.title}</li>`;
+        list=list+el;
+        
+    })
 
-
-    //送出請求
+    ul.innerHTML=list;
+}
 
     </script>
