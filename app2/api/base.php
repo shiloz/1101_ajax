@@ -42,7 +42,7 @@ class DB{
         }
 
         //echo $sql;
-        return $this->pdo->query($sql)->fetchAll();
+        return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
     }
 
