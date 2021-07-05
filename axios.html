@@ -7,7 +7,22 @@
     <title>axios</title>
     <link rel="shortcut icon" href="#" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
-    <!-----引入axios函式庫------->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <style>
+        ul{
+            list-style-type: decimal;
+        }
+        li{
+            padding:5px 10px;
+            margin:10px 5px;
+            border:1px solid #eee;
+            box-shadow: 1px 1px 5px grey;
+            
+        }
+  
+  
+    </style>
 </head>
 <body>
     <h1 class="header">axios</h1>
@@ -25,6 +40,18 @@
 * 4.建立錯誤處理
 ********************************************************/
 
+axios.get('https://kktix.com/events.json')
+.then(function(response){
+    console.log(response)
+    render(response.data)
+//處理回應
+
+})
+.catch(function(err){
+//error
+
+})
+
 //發起一個axios請求
 
 
@@ -32,5 +59,31 @@
 
 
 //建立錯誤處理
+function render(r){
+console.log(r)
+let title=r.title
+let th=document.querySelector('.title');
+th.innerHTML=title
+console.log(title,th);
+
+let entry=r.entry;
+let ul=document.querySelector('ul');
+let list="";
+entry.forEach(function(event,idx){
+    let el=`<li>${event.title}</li>`;
+    list=list+el;
+    
+})
+ul.innerHTML=list;
+
+$("li").hover(
+function(){
+    $(this).css({background:'yellow'})
+},
+function(){
+    $(this).css({background:'white'})
+}
+)
+}
 
 </script>

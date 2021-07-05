@@ -7,7 +7,21 @@
     <title>jQuery</title>
     <link rel="shortcut icon" href="#" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
-      <!-------引入jQuery函式庫------->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <style>
+      ul{
+          list-style-type: decimal;
+      }
+      li{
+          padding:5px 10px;
+          margin:10px 5px;
+          border:1px solid #eee;
+          box-shadow: 1px 1px 5px grey;
+          
+      }
+
+
+  </style>
 </head>
 <body>
     <h1 class="header">jQuery</h1>
@@ -26,18 +40,36 @@
     ********************************************************/
      
     //利用$.ajax()方法傳送請求並取得回應
-    /* $.ajax(
+/*      $.ajax(
       {
-        url:'',
-        type:'',
-        success:,
-        error:,
-        complete:
+        url:'https://kktix.com/events.json',
+        type:'get',
+        success:(res)=>{render(res)},
       }
-    ) */   
+    )   
+ */
+      $.get('https://kktix.com/events.json',(res)=>{
+          render(res)
+      })
 
+
+    function render(r){
+console.log(r)
+let title=r.title
+let th=document.querySelector('.title');
+th.innerHTML=title
+console.log(title,th);
+
+let entry=r.entry;
+let ul=document.querySelector('ul');
+let list="";
+entry.forEach(function(event,idx){
+    let el=`<li>${event.title}</li>`;
+    list=list+el;
     
-    //利用$.get()方法傳送請求並取得回應
+})
 
+ul.innerHTML=list;
+}
 
   </script>
