@@ -28,7 +28,7 @@
     
     }
 
-    #newForm{
+    #newForm,#editForm{
       width:50%;
       padding:20px;
       border:1px solid #ccc;
@@ -75,8 +75,21 @@
 
     </p>
   </form>
+</div>
 
-
+<div id="editForm">
+  <h3>編輯學生資料</h3>
+  <form action="" method="post">
+    
+    <p>id:<span id="edit_id"></span></p>
+    <p>姓名:<input type="text" name="name" id="edit_name"></p>
+    <p>身份證字號:<input type="text" name="nat_id" id="edit_nat_id"></p>
+    <p>班級代號:<input type="text" name="class_num" id="edit_class_num"></p>
+    <p>科別:<input type="text" name="dept" id="edit_dept"></p>
+    <p>
+      <input type="button" value="修改" onclick="update()">
+    </p>
+  </form>
 </div>
 
 </body>
@@ -140,7 +153,7 @@ function query(classNum){
                   <td>${el.name}</td>
                   <td>${el.dept}</td>
                   <td>
-                      <button onclick="update(${el.id})">編輯</button>
+                      <button onclick="find(${el.id})">編輯</button>
                       <button onclick="del(${el.id})">刪除</button>
                   </td>
                  </tr>`;
@@ -151,9 +164,44 @@ function query(classNum){
   })
 }
 
-//編輯資料的函式
-function update(id){
+function find(id){
+  $.get("api/query_one.php",{id},function(stu){
+    let student=JSON.parse(stu)
+      $("#edit_id").val(student.id)
+      $("#edit_name").val(student.name)
+      $("#edit_nat_id").val(student.nat_id)
+      $("#edit_class_num").val(student.class_num)
+      $("#edit_dept").val(student.dept)
+      $("#editForm").show()
+  })
+}
 
+//編輯資料的函式
+function update(){
+  let name=$("#edit_name").val();
+  let nat_id=$("#edit_nat_id").val();
+  let class_num=$("#edit_class_num").val();
+  let dept=$("#edit_dept").val();
+  let id=$("#edit_id").val();
+
+  $.post("api/update.php",
+        {
+          name,
+          nat_id,
+          class_num,
+          dept,
+          id
+        },
+        (res)=>{
+          console.log(res);
+      if(res=='1'){
+      alert("修改成功");
+    }else{
+      alert("修改失敗")
+    }
+    $("#editForm").hide();
+    query(class_num.substr(0,3))
+    })
 }
 
 //刪除資料的函式
